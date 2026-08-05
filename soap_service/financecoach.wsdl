@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="FinanceCoachService"
+   targetNamespace="http://financecoach.sena.edu.co/soap"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns="http://financecoach.sena.edu.co/soap"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+   <message name="obtenerBalanceRequest">
+      <part name="userId" type="xsd:int"/>
+   </message>
+   <message name="obtenerBalanceResponse">
+      <part name="balanceNeto" type="xsd:float"/>
+   </message>
+
+   <message name="convertirMonedaRequest">
+      <part name="monto" type="xsd:float"/>
+      <part name="origen" type="xsd:string"/>
+      <part name="destino" type="xsd:string"/>
+   </message>
+   <message name="convertirMonedaResponse">
+      <part name="montoConvertido" type="xsd:float"/>
+   </message>
+
+   <portType name="FinanceCoachPortType">
+      <operation name="obtenerBalance">
+         <input message="tns:obtenerBalanceRequest"/>
+         <output message="tns:obtenerBalanceResponse"/>
+      </operation>
+      <operation name="convertirMoneda">
+         <input message="tns:convertirMonedaRequest"/>
+         <output message="tns:convertirMonedaResponse"/>
+      </operation>
+   </portType>
+
+   <binding name="FinanceCoachBinding" type="tns:FinanceCoachPortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="obtenerBalance">
+         <soap:operation soapAction="urn:obtenerBalance"/>
+         <input><soap:body use="literal" namespace="http://financecoach.sena.edu.co/soap"/></input>
+         <output><soap:body use="literal" namespace="http://financecoach.sena.edu.co/soap"/></output>
+      </operation>
+      <operation name="convertirMoneda">
+         <soap:operation soapAction="urn:convertirMoneda"/>
+         <input><soap:body use="literal" namespace="http://financecoach.sena.edu.co/soap"/></input>
+         <output><soap:body use="literal" namespace="http://financecoach.sena.edu.co/soap"/></output>
+      </operation>
+   </binding>
+
+   <service name="FinanceCoachService">
+      <port name="FinanceCoachPort" binding="tns:FinanceCoachBinding">
+         <soap:address location="http://localhost/financecoach-soap/soap_server.php"/>
+      </port>
+   </service>
+</definitions>

@@ -1,0 +1,1 @@
+<?php die("RESPONDIENDO DESDE EL ARCHIVO NUEVO"); ?>
